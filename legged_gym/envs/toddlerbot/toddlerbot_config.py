@@ -4,8 +4,8 @@ from legged_gym.envs.base.legged_robot_config import LeggedRobotCfg, LeggedRobot
 class ToddlerbotCfg(LeggedRobotCfg):
     class env(LeggedRobotCfg.env):
         num_envs = 4096
-        num_observations = 169
-        num_actions = 12
+        num_observations = 253
+        num_actions = 18
 
     class terrain(LeggedRobotCfg.terrain):
         mesh_type = "plane"
@@ -35,7 +35,7 @@ class ToddlerbotCfg(LeggedRobotCfg):
 
     class control(LeggedRobotCfg.control):
         # PD Drive parameters:
-        stiffness = {
+        stiffness = {   
             "left_hip_yaw": 100.0,
             "left_hip_roll": 100.0,
             "left_hip_pitch": 100.0,
@@ -55,7 +55,7 @@ class ToddlerbotCfg(LeggedRobotCfg):
             "right_sho_roll": 100.0,
             "right_elb": 100.0,
         }  # [N*m/rad]
-        damping = {
+        damping = { 
             "left_hip_yaw": 10.0,
             "left_hip_roll": 10.0,
             "left_hip_pitch": 10.0,
@@ -81,7 +81,7 @@ class ToddlerbotCfg(LeggedRobotCfg):
         decimation = 4
 
     class asset(LeggedRobotCfg.asset):
-        file = "{LEGGED_GYM_ROOT_DIR}/resources/robots/toddlerbot/urdf/toddlerbot.urdf"
+        file = "{LEGGED_GYM_ROOT_DIR}/../../robot_descriptions/toddlerbot/toddlerbot_isaac.urdf"
         name = "toddlerbot"
         foot_name = "ank_roll_link"
         terminate_after_contacts_on = ["body_link"]
