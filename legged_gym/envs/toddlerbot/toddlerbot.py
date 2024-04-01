@@ -10,7 +10,40 @@ from legged_gym.envs import LeggedRobot
 
 
 class Toddlerbot(LeggedRobot):
-    def _reward_no_fly(self):
-        contacts = self.contact_forces[:, self.feet_indices, 2] > 0.1
-        single_contact = torch.sum(1.0 * contacts, dim=1) == 1
-        return 1.0 * single_contact
+    def _reward_dof_pos_pitch(self):
+        # Add constraint on pitch angles of the leg
+        return torch.sum(
+            torch.square(
+                self.dof_pos[:, self.dof_indices["knee"]]
+                - self.dof_pos[:, self.dof_indices["hip_pitch"]]
+                - self.dof_pos[:, self.dof_indices["ank_pitch"]]
+            ),
+            dim=1,
+        )
+
+    def _reward_dof_pos_roll(self):
+        # Add constraint on roll angles of the leg
+        return torch.sum(
+            torch.square(
+                self.dof_pos[:, self.dof_indices["hip_roll"]]
+                + self.dof_pos[:, self.dof_indices["ank_roll"]]
+            ),
+            dim=1,
+        )
+
+    def _reward_dof_pos_upper_body(self):
+        # Penalize upper body joints
+        dof_upper_body_indices = torch.cat(
+            [
+                self.dof_indices["sho_pitch"],
+                self.dof_indices["sho_roll"],
+                self.dof_indices["elb"],
+            ]
+        )
+        return torch.sum(
+            torch.square(
+                self.dof_pos[:, dof_upper_body_indices]
+                - self.default_dof_pos[:, dof_upper_body_indices]
+            ),
+            dim=1,
+        )
