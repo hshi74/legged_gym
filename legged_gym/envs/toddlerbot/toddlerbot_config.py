@@ -122,6 +122,9 @@ class ToddlerbotCfg(LeggedRobotCfg):
             dof_vel = -0.0
             ang_vel_xy = -0.0
             feet_contact_forces = -0.0
+            dof_pos_pitch = -1.0
+            dof_pos_roll = -1.0
+            dof_pos_upper_body = -1.0
 
     class viewer:
         pos = [-1, -0.5, 0.5]  # [m]
